@@ -9,6 +9,7 @@
   const LINK_LABELS = { paper: "Paper", pdf: "PDF", osf: "Data & code (OSF)", researchgate: "ResearchGate" };
 
   function entry(p) {
+    const short = esc(String(p.title).split(/[:?]/)[0].trim());
     const li = document.createElement("li");
     li.className = "pub";
     li.id = p.id;
@@ -25,11 +26,11 @@
     if (SHOW_FLAGS && p.tbc) cite += `<span class="flag" title="${esc(p.tbc)}">⚑ confirm</span>`;
 
     const meta = [];
-    if (p.summary) meta.push(`<button class="lnk" aria-expanded="false" aria-controls="${p.id}-sum">Summary <span class="car">▸</span></button>`);
+    if (p.summary) meta.push(`<button class="lnk" aria-expanded="false" aria-controls="${p.id}-sum" data-gc="Summary: ${short}">Summary <span class="car">▸</span></button>`);
     for (const k of ["paper", "pdf", "osf", "researchgate"]) {
-      if (p.links && p.links[k]) meta.push(`<a class="lnk" href="${esc(p.links[k])}" target="_blank" rel="noopener">${LINK_LABELS[k]}</a>`);
+      if (p.links && p.links[k]) meta.push(`<a class="lnk" href="${esc(p.links[k])}" target="_blank" rel="noopener" data-gc="${LINK_LABELS[k].split(" ")[0]}: ${short}">${LINK_LABELS[k]}</a>`);
     }
-    const press = (p.press || []).map((pr) => `<a href="${esc(pr.url)}" target="_blank" rel="noopener">${esc(pr.outlet)}${pr.label ? " (" + esc(pr.label) + ")" : ""}</a>`);
+    const press = (p.press || []).map((pr) => `<a href="${esc(pr.url)}" target="_blank" rel="noopener" data-gc="Press (${esc(pr.outlet)}): ${short}">${esc(pr.outlet)}${pr.label ? " (" + esc(pr.label) + ")" : ""}</a>`);
 
     li.innerHTML =
       `<p class="cite">${cite}</p>` +
@@ -56,12 +57,12 @@
     const chips = byId("chips");
     if (!chips) return;
     const all = document.createElement("button");
-    all.className = "chip"; all.dataset.slug = ""; all.textContent = "All";
+    all.className = "chip"; all.dataset.slug = ""; all.textContent = "All"; all.dataset.gc = "Topic: All";
     chips.appendChild(all);
     for (const t of TOPICS) {
       const n = PUBS.filter((p) => (p.topics || []).includes(t.slug)).length;
       const c = document.createElement("button");
-      c.className = "chip"; c.dataset.slug = t.slug;
+      c.className = "chip"; c.dataset.slug = t.slug; c.dataset.gc = "Topic: " + t.label;
       c.innerHTML = `${esc(t.label)}<span class="n">${n}</span>`;
       chips.appendChild(c);
     }

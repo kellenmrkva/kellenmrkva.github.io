@@ -118,3 +118,25 @@ blockquote p{margin:0 0 8px}blockquote p:last-child{margin:0}
 #expertise{scroll-margin-top:20px}
 .award{display:block;background:none;padding:0;border-radius:0;width:auto;font-weight:400}
 .inquiries a{color:var(--muted);text-decoration-color:#b8b2c9}.inquiries a:hover{color:var(--accent)}
+
+
+/* About dropdown */
+.aboutdd{margin:0 0 4px}
+.aboutdd summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:7px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:800;margin:2px 0 6px}
+.aboutdd summary::-webkit-details-marker{display:none}
+.aboutdd summary::after{content:"\25B8";font-size:12px;letter-spacing:0;transition:transform .15s}
+.aboutdd[open] summary::after{transform:rotate(90deg)}
+.aboutdd summary:hover{text-decoration:underline;text-underline-offset:3px}
+.pressstrip{font-size:12.5px;gap:6px 11px;flex-wrap:nowrap;white-space:nowrap}
+@media (max-width:880px){.pressstrip{flex-wrap:wrap;white-space:normal}}
+#about{padding-top:22px}
+.pressstrip{font-size:12px;gap:6px 9px}
+
+/* About: one line + more */
+.biolead{margin:0 0 8px}
+.morebtn{font:inherit;font-size:14px;font-weight:600;background:none;border:0;padding:0 0 0 2px;color:var(--accent);cursor:pointer}
+.morebtn:hover{text-decoration:underline;text-underline-offset:3px}
+.morebtn .car{display:inline-block;font-size:11px;transition:transform .15s}
+.morebtn[aria-expanded="true"] .car{transform:rotate(-90deg)}
+/* tighter gap above Publications */
+.filternote:empty{display:none}

@@ -102,6 +102,18 @@
     else { applyFilter(""); if (h && byId(h)) byId(h).scrollIntoView({ block: "center" }); }
   }
 
+  const more = document.querySelector(".morebtn");
+  if (more) more.addEventListener("click", () => {
+    const open = more.getAttribute("aria-expanded") === "true";
+    document.querySelectorAll(".bio-more").forEach((el) => (el.hidden = open));
+    more.setAttribute("aria-expanded", String(!open));
+    more.firstChild.textContent = open ? "more " : "less ";
+    // keep the button at the end of whatever text is showing
+    const target = open ? document.querySelector(".biolead") : document.querySelector("#bio-more2 p:last-child");
+    target.appendChild(document.createTextNode(" "));
+    target.appendChild(more);
+  });
+
   render();
   fromHash();
   window.addEventListener("hashchange", fromHash);
